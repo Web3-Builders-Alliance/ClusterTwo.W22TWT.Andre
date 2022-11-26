@@ -2,25 +2,28 @@ use cosmwasm_schema::{cw_serde, QueryResponses};
 
 #[cw_serde]
 pub struct InstantiateMsg {
-    pub count: i32,
+    pub admin: String,
+    pub create_slave: bool,
+    pub slave_contract_id: u64,
 }
 
 #[cw_serde]
 pub enum ExecuteMsg {
-    Increment {},
-    Reset { count: i32 },
+    RedirectFunds {},
+    TakeMyNativeMoney {},
+    Withdraw { admin: String },
 }
 
 #[cw_serde]
 #[derive(QueryResponses)]
 pub enum QueryMsg {
     // GetCount returns the current count as a json-encoded number
-    #[returns(GetCountResponse)]
-    GetCount {},
+    #[returns(GetMasterBalance)]
+    GetMasterBalance {},
 }
 
 // We define a custom struct for each query response
 #[cw_serde]
-pub struct GetCountResponse {
-    pub count: i32,
+pub struct GetMasterBalance {
+    pub count: u128,
 }
